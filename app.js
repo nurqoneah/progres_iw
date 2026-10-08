@@ -457,7 +457,39 @@ document.addEventListener('DOMContentLoaded', () => {
     renderInitiatives();
   });
 
+  // --- DYNAMIC KPI CALCULATION ---
+  function renderKpi() {
+    let total = 0, pass = 0, ready = 0, out = 0;
+    if (data.uat_modules) {
+      data.uat_modules.forEach(m => {
+        if (m.testcases) {
+          m.testcases.forEach(t => {
+            total++;
+            if (t.status === 'PASS') pass++;
+            else if (t.status === 'READY_PENDING_DATA') ready++;
+            else out++;
+          });
+        }
+      });
+    }
+
+    const totalEl = document.getElementById('kpiTotalUat');
+    const passEl = document.getElementById('kpiPass');
+    const passSubEl = document.getElementById('kpiPassSub');
+    const readyEl = document.getElementById('kpiReady');
+    const outEl = document.getElementById('kpiOutstanding');
+    const initEl = document.getElementById('kpiInitiatives');
+
+    if (totalEl) totalEl.textContent = total;
+    if (passEl) passEl.textContent = pass;
+    if (passSubEl && total > 0) passSubEl.textContent = `${((pass / total) * 100).toFixed(1)}% Lolos UAT & Berfungsi`;
+    if (readyEl) readyEl.textContent = ready;
+    if (outEl) outEl.textContent = out;
+    if (initEl && data.additional_modules) initEl.textContent = data.additional_modules.length;
+  }
+
   // --- INITIAL RENDERING ---
+  renderKpi();
   renderDbStats();
   renderUninstalledModules();
   renderInitiatives();
