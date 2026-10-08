@@ -3388,6 +3388,17 @@ window.PORTAL_DATA = {
       "impact": "Memastikan SLA operasional toko terpenuhi dan tidak ada dokumen transaksi yang macet tanpa follow-up.",
       "status": "Installed & Active",
       "odoo_url": "https://inti-warna.odoo.com//odoo/action-581"
+    },
+    {
+      "module": "digi_pos_loss_sell_log",
+      "title": "Modul POS Loss Sell Log & Analytics Penjualan Batal / Barang Kosong",
+      "category": "Inovasi POS & Retail",
+      "icon": "remove_shopping_cart",
+      "badge": "Modul Tambahan",
+      "summary": "Pencatatan otomatis potensi penjualan yang hilang (Loss Sell) langsung dari tombol layar POS kasir saat barang stok kosong atau harga tidak sepakat, dilengkapi alasan pembatalan (Barang Kosong, Gagal Harga, dsb) serta wizard follow-up instan ke tim SCM (Buat RFQ Pembelian / Request Mutasi Antar Cabang).",
+      "impact": "Memberikan visibilitas demand barang yang hilang secara real-time bagi tim Purchasing & SCM untuk segera mengisi kembali stok barang (replenishment) yang paling diminati konsumen tetapi sering habis.",
+      "status": "Installed & Active",
+      "odoo_url": "https://inti-warna.odoo.com//odoo/action-585"
     }
   ]
 };
