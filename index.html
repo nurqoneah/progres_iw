@@ -12,6 +12,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='70' x='50' text-anchor='middle' font-size='60' fill='white' font-family='sans-serif' font-weight='bold'>IW</text></svg>">
   
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="present.css">
 </head>
 <body>
   <div class="container">
@@ -27,6 +28,11 @@
       </div>
       
       <div class="nav-actions">
+        <button id="btnPresent" class="btn btn-primary" title="Mode Presentasi (slide)">
+          <span class="material-symbols-outlined">slideshow</span>
+          <span>Mode Presentasi</span>
+        </button>
+
         <div class="badge-db" title="Terhubung ke Server Cloud Odoo Production">
           <span class="dot"></span>
           <span>DB: https://inti-warna.odoo.com/</span>
@@ -47,13 +53,13 @@
     <section class="hero">
       <div class="hero-tag">
         <span class="material-symbols-outlined" style="font-size: 16px;">verified</span>
-        <span>Laporan Resmi Status UAT & Pengembangan Sistem</span>
+        <span>Laporan Status UAT - Diperbarui 19 Oktober 2026</span>
       </div>
       <h2>Transparansi Hasil UAT & Tambahan Fitur ERP</h2>
       <p class="hero-desc">
         Halaman ini menyajikan rekapitulasi pengujian <strong>136 skenario UAT</strong> berdasarkan Dokumen UAT v2.0 (4 Maret 2026), 
-        cross-check langsung ke basis data <strong>https://inti-warna.odoo.com/</strong>, bukti URL menu Odoo, rincian detail kemudahan & sub-fitur kustom 
-        yang terintegrasi di setiap modul UAT, serta <strong>15 Tambahan Fitur</strong> di luar scope standar UAT 
+        cross-check ke <strong>database produksi (cut-off 16 Oktober 2026)</strong> dan kontrol UAT operasional (xlsx, 2 Oktober 2026). serta konfirmasi tim implementasi. Halaman ini juga memuat rincian detail kemudahan & sub-fitur kustom 
+        yang terintegrasi di setiap modul UAT, serta <strong>30 Tambahan Fitur</strong> di luar scope standar UAT 
         yang aktif beroperasi untuk mendukung operasional retail cat dan bahan bangunan Intiwarna.
       </p>
     </section>
@@ -71,29 +77,29 @@
 
       <div class="kpi-card success">
         <div class="kpi-header">
-          <span class="kpi-title">UAT Terverifikasi & Aktif</span>
+          <span class="kpi-title">UAT Selesai</span>
           <span class="material-symbols-outlined kpi-icon" style="color: #34d399;">check_circle</span>
         </div>
-        <div class="kpi-val" id="kpiPass" style="color: #34d399;">130</div>
-        <div class="kpi-sub" id="kpiPassSub">95.6% Lolos UAT & Berfungsi</div>
+        <div class="kpi-val" id="kpiPass" style="color: #34d399;">133</div>
+        <div class="kpi-sub" id="kpiPassSub">97.8% Test Case Selesai</div>
       </div>
 
       <div class="kpi-card warning">
         <div class="kpi-header">
-          <span class="kpi-title">Siap / Pending Data Klien</span>
+          <span class="kpi-title">Belum Diuji (Siap Diuji)</span>
           <span class="material-symbols-outlined kpi-icon" style="color: #fbbf24;">pending_actions</span>
         </div>
-        <div class="kpi-val" id="kpiReady" style="color: #fbbf24;">5</div>
-        <div class="kpi-sub">Fitur Siap, Butuh Master/Saldo Riil</div>
+        <div class="kpi-val" id="kpiReady" style="color: #fbbf24;">1</div>
+        <div class="kpi-sub">HR: Employee Skills</div>
       </div>
 
       <div class="kpi-card danger">
         <div class="kpi-header">
-          <span class="kpi-title">Outstanding UAT</span>
+          <span class="kpi-title">Blocked / Belum Delivered</span>
           <span class="material-symbols-outlined kpi-icon" style="color: #fb7185;">pause_circle</span>
         </div>
-        <div class="kpi-val" id="kpiOutstanding" style="color: #fb7185;">1</div>
-        <div class="kpi-sub">Mesin Tinting (Menunggu Hardware)</div>
+        <div class="kpi-val" id="kpiOutstanding" style="color: #fb7185;">2</div>
+        <div class="kpi-sub">Tinting, budget</div>
       </div>
 
       <div class="kpi-card purple">
@@ -101,14 +107,19 @@
           <span class="kpi-title">Tambahan Fitur</span>
           <span class="material-symbols-outlined kpi-icon" style="color: #c084fc;">extension</span>
         </div>
-        <div class="kpi-val" id="kpiInitiatives" style="color: #c084fc;">14</div>
+        <div class="kpi-val" id="kpiInitiatives" style="color: #c084fc;">30</div>
         <div class="kpi-sub">Di Luar Scope Standar UAT</div>
       </div>
     </section>
 
     <!-- NAVIGATION TABS -->
     <nav class="tabs-container">
-      <button class="tab-btn active" data-tab="uat">
+      <button class="tab-btn active" data-tab="review">
+        <span class="material-symbols-outlined">co_present</span>
+        <span>Progress Review</span>
+      </button>
+
+      <button class="tab-btn" data-tab="uat">
         <span class="material-symbols-outlined">checklist</span>
         <span>Matriks UAT (136 Test Cases)</span>
         <span class="tab-badge" id="tabBadgeUat">136</span>
@@ -116,8 +127,8 @@
 
       <button class="tab-btn" data-tab="initiatives">
         <span class="material-symbols-outlined">extension</span>
-        <span>Tambahan Fitur (14 Fitur)</span>
-        <span class="tab-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc;">14 Fitur</span>
+        <span>Tambahan Fitur (30 Fitur)</span>
+        <span class="tab-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc;">30 Fitur</span>
       </button>
 
       <button class="tab-btn" data-tab="database">
@@ -139,12 +150,15 @@
     </nav>
 
     <!-- TAB 1: UAT MATRIX -->
-    <main id="tabContentUat" class="tab-content">
+    <!-- TAB 0: PROGRESS REVIEW (rendered by review.js) -->
+    <section id="tabContentReview" class="tab-content"></section>
+
+    <main id="tabContentUat" class="tab-content" style="display: none;">
       <!-- Search & Filters -->
       <div class="controls-bar">
         <div class="search-wrapper">
           <span class="material-symbols-outlined search-icon">search</span>
-          <input type="text" id="uatSearchInput" class="search-input" placeholder="Cari skenario pengujian, nomor UAT, langkah, atau bukti DB...">
+          <input type="text" id="uatSearchInput" class="search-input" placeholder="Cari skenario pengujian, nomor UAT, langkah, atau hasil pengujian...">
         </div>
 
         <div class="filter-group">
@@ -165,9 +179,12 @@
 
           <select id="statusFilter" class="filter-select">
             <option value="ALL">Semua Status</option>
-            <option value="PASS">Pass / Verified (118)</option>
-            <option value="READY_PENDING_DATA">Ready / Pending Data (17)</option>
-            <option value="OUTSTANDING">Outstanding (1)</option>
+            <option value="PASS">PASS (116)</option>
+            <option value="PASS_NOTES">PASS WITH NOTES (16)</option>
+            <option value="NA">N/A (1)</option>
+            <option value="NOT_DELIVERED">BELUM DELIVERED (1)</option>
+            <option value="BLOCKED">BLOCKED (1)</option>
+            <option value="NOT_TESTED">BELUM DIUJI (1)</option>
           </select>
 
           <button id="btnExpandAll" class="btn btn-secondary" title="Buka / Tutup Semua Modul">
@@ -193,7 +210,7 @@
       <div style="margin-bottom: 20px;">
         <h3 style="font-size: 18px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
           <span class="material-symbols-outlined" style="color: #c084fc;">extension</span>
-          <span>14 Tambahan Fitur (Di Luar Scope Standar UAT)</span>
+          <span>30 Tambahan Fitur (Di Luar Scope Standar UAT)</span>
         </h3>
         <p style="font-size: 14px; color: var(--text-muted);">
           Fitur-fitur spesifik di bawah ini merupakan fungsionalitas mandiri bernilai tambah tinggi di luar 11 modul utama UAT standar, 
@@ -209,16 +226,17 @@
         <div class="filter-group">
           <select id="initCategoryFilter" class="filter-select">
             <option value="ALL">Semua Kategori Tambahan Fitur</option>
-            <option value="Logistik & Konsinyasi">Logistik & Konsinyasi</option>
-            <option value="Inovasi CRM & Mitra">Inovasi CRM & Mitra (Tabungan Tukang)</option>
-            <option value="Logistik & Distribusi">Logistik & Distribusi (Fleet)</option>
-            <option value="HR & Organisasi">HR & Organisasi (MPR)</option>
-            <option value="Komunikasi & Omnichannel">Komunikasi & Omnichannel (WA & Bot)</option>
-            <option value="Kecerdasan Buatan (AI)">Kecerdasan Buatan (AI)</option>
-            <option value="Inovasi POS & Retail">Inovasi POS & Retail</option>
-            <option value="Analisis Bisnis & Strategi">Analisis Bisnis & Strategi (BCG/Pareto)</option>
-            <option value="Penjualan & Proyek">Penjualan & Proyek</option>
-            <option value="Operasional & Monitoring">Operasional & Monitoring</option>
+            <option value="Purchase">Purchase</option>
+            <option value="Konsinyasi">Konsinyasi</option>
+            <option value="Inventory">Inventory</option>
+            <option value="Finance">Finance</option>
+            <option value="POS">POS</option>
+            <option value="CRM &amp; Loyalty">CRM &amp; Loyalty</option>
+            <option value="Harga">Harga</option>
+            <option value="HR">HR</option>
+            <option value="Logistik">Logistik</option>
+            <option value="Komunikasi">Komunikasi</option>
+            <option value="AI">AI</option>
           </select>
         </div>
       </div>
@@ -233,7 +251,7 @@
       <div style="margin-bottom: 24px;">
         <h3 style="font-size: 18px; margin-bottom: 8px;">Audit Integritas Data Riil di PostgreSQL (intiwarna-testing-1)</h3>
         <p style="font-size: 14px; color: var(--text-muted);">
-          Data di bawah ini ditarik langsung dari tabel basis data PostgreSQL lokal untuk membuktikan bahwa modul telah terisi transaksi aktif dan melayani operasional skala besar.
+          Data di bawah ini diambil dari database produksi (cut-off 16 Oktober 2026), menunjukkan bahwa modul telah terisi transaksi aktif dan melayani operasional skala besar.
         </p>
       </div>
 
@@ -252,37 +270,33 @@
       </div>
 
       <div class="roadmap-container">
-        
+
         <div class="roadmap-card priority-high">
           <div class="roadmap-number">01</div>
           <div class="roadmap-content">
-            <h4>Integrasi Mesin Oplos Cat (Modul Tinting)</h4>
-            <p>
-              Modul <code>digi_tinting_base</code> saat ini berstatus uninstalled. Untuk mengaktifkannya, tim IT Intiwarna / supplier mesin cat (Corob / Fast & Fluid) perlu menyediakan spesifikasi software dispenser, koneksi COM Port / serial driver, atau database formula warna cat yang digunakan di toko.
-            </p>
+            <h4>Integrasi Mesin Tinting (TNT-1)</h4>
+            <p>Modul <code>digi_tinting_base</code> belum terpasang di produksi. Tinting saat ini dicatat sebagai produk add-on di POS. Integrasi Sales Order dari mesin tinting menunggu spesifikasi software dispenser / database formula warna dari supplier mesin.</p>
             <div class="roadmap-meta">
               <span class="roadmap-owner">
                 <span class="material-symbols-outlined" style="font-size: 16px;">business</span>
-                PIC: Supplier Mesin Cat & Klien Intiwarna
+                PIC: Supplier Mesin Cat & Inti Warna
               </span>
-              <span class="status-pill outstanding">Outstanding</span>
+              <span class="status-pill outstanding">Blocked</span>
             </div>
           </div>
         </div>
 
-        <div class="roadmap-card priority-med">
+        <div class="roadmap-card priority-high">
           <div class="roadmap-number">02</div>
           <div class="roadmap-content">
-            <h4>Kredensial Akun Merchant Payment Gateway Website</h4>
-            <p>
-              Modul Website E-Commerce sudah berfungsi penuh untuk registrasi, keranjang belanja, checkout, dan katalog 19,000+ produk. Agar transaksi pembayaran online langsung memotong kartu kredit/QRIS di web, Klien perlu memberikan API Key Merchant (Midtrans / Xendit / Doku).
-            </p>
+            <h4>Budget Management (ACC-18)</h4>
+            <p>Satu-satunya test case Accounting yang belum delivered. Menunggu pagu anggaran bulanan per cabang dari manajemen (ISS-198).</p>
             <div class="roadmap-meta">
               <span class="roadmap-owner">
-                <span class="material-symbols-outlined" style="font-size: 16px;">vpn_key</span>
-                PIC: Tim Keuangan Intiwarna
+                <span class="material-symbols-outlined" style="font-size: 16px;">savings</span>
+                PIC: Manajemen Inti Warna + Digision
               </span>
-              <span class="status-pill ready">Pending Data</span>
+              <span class="status-pill fail">Belum Delivered</span>
             </div>
           </div>
         </div>
@@ -290,33 +304,29 @@
         <div class="roadmap-card priority-med">
           <div class="roadmap-number">03</div>
           <div class="roadmap-content">
-            <h4>Alokasi Kuota Cuti Tahunan & Pemrosesan Payroll Rutin</h4>
-            <p>
-              121 master karyawan sudah terdaftar lengkap di database. Untuk mengaktifkan alur cuti mandiri secara penuh, HRD Intiwarna perlu menginput hak sisa cuti tahunan awal setiap karyawan. Modul payroll custom juga sudah siap mengkalkulasi insentif dan potongan pinjaman.
-            </p>
+            <h4>Employee Skills Management (HR-11)</h4>
+            <p>Tipe skill sudah dikonfigurasi; tinggal pengisian skill karyawan dan pengujian bersama HRD.</p>
             <div class="roadmap-meta">
               <span class="roadmap-owner">
-                <span class="material-symbols-outlined" style="font-size: 16px;">person_pin</span>
-                PIC: HRD Intiwarna
+                <span class="material-symbols-outlined" style="font-size: 16px;">school</span>
+                PIC: HRD Inti Warna
               </span>
-              <span class="status-pill ready">Pending Data</span>
+              <span class="status-pill ready">Belum Diuji</span>
             </div>
           </div>
         </div>
 
-        <div class="roadmap-card priority-med">
+        <div class="roadmap-card priority-low">
           <div class="roadmap-number">04</div>
           <div class="roadmap-content">
-            <h4>Template Mutasi Rekening Koran Bank (Bank Statement Import)</h4>
-            <p>
-              Fitur rekonsiliasi bank otomatis sudah siap di modul Accounting. Tim finance Intiwarna hanya perlu mengunduh mutasi rekening koran dari internet banking (BCA / Mandiri) dalam format CSV atau Excel untuk disamakan kolomnya dengan Odoo.
-            </p>
+            <h4>Website E-Commerce Go-Live (WEB 1-16)</h4>
+            <p>Seluruh fitur website & e-commerce sudah diimplementasikan (PASS WITH NOTES). Catatan: belum ada transaksi online live, kategori publik perlu diisi, dan payment gateway menunggu akun merchant (Midtrans/Xendit).</p>
             <div class="roadmap-meta">
               <span class="roadmap-owner">
-                <span class="material-symbols-outlined" style="font-size: 16px;">account_balance</span>
-                PIC: Finance Intiwarna
+                <span class="material-symbols-outlined" style="font-size: 16px;">language</span>
+                PIC: Tim Keuangan & Marketing Inti Warna
               </span>
-              <span class="status-pill pass">Selesai / Terverifikasi</span>
+              <span class="status-pill pass-notes">Pass With Notes</span>
             </div>
           </div>
         </div>
@@ -327,7 +337,7 @@
     <!-- TAB 5: UNINSTALLED MODULES -->
     <section id="tabContentUninstalled" class="tab-content" style="display: none;">
       <div style="margin-bottom: 24px;">
-        <h3 style="font-size: 18px; margin-bottom: 8px;">Daftar 9 Modul Custom yang Tidak Di-install di intiwarna-testing-1</h3>
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Daftar 9 Modul Custom yang Tidak Di-install di Produksi</h3>
         <p style="font-size: 14px; color: var(--text-muted);">
           Dari total 74 folder custom di <code>addons_custom</code>, terdapat 9 modul yang sengaja tidak dinaikkan ke database aktif karena alasan teknis berikut:
         </p>
@@ -371,5 +381,8 @@
   <!-- Scripts -->
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script src="review.js"></script>
+  <script src="slides-data.js"></script>
+  <script src="present.js"></script>
 </body>
 </html>

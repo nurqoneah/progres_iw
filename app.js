@@ -7,8 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // --- STATUS (kriteria Tabel 2 Dokumen UAT + BELUM DIUJI) ---
+  const STATUS_META = {
+    PASS: { cls: 'pass', label: 'PASS' },
+    PASS_NOTES: { cls: 'pass-notes', label: 'PASS WITH NOTES' },
+    FAIL: { cls: 'fail', label: 'FAIL' },
+    BLOCKED: { cls: 'outstanding', label: 'BLOCKED' },
+    NA: { cls: 'na', label: 'N/A' },
+    NOT_TESTED: { cls: 'ready', label: 'BELUM DIUJI' },
+    NOT_DELIVERED: { cls: 'fail', label: 'BELUM DELIVERED' }
+  };
+  const DONE_STATUSES = ['PASS', 'PASS_NOTES', 'NA'];
+
   // --- STATE ---
-  let currentTab = 'uat';
+  let currentTab = 'review';
   let searchTerm = '';
   let selectedModule = 'ALL';
   let selectedStatus = 'ALL';
@@ -22,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeIcon = document.getElementById('themeIcon');
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = {
+    review: document.getElementById('tabContentReview'),
     uat: document.getElementById('tabContentUat'),
     initiatives: document.getElementById('tabContentInitiatives'),
     database: document.getElementById('tabContentDatabase'),
@@ -149,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           
           <h4 class="init-title">${init.title}</h4>
-          <div class="init-module-name">${init.module}</div>
+          ${init.module ? `<div class="init-module-name">${init.module}</div>` : ''}
           
           <p class="init-summary">${init.summary}</p>
           
@@ -212,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
       section.id = `mod-sec-${mod.id}`;
 
       // Calculate pass rate in this module
-      const passCount = mod.testcases.filter(t => t.status === 'PASS').length;
+      const passCount = mod.testcases.filter(t => DONE_STATUSES.includes(t.status)).length;
       const customFeaturesCount = mod.custom_features_count || 0;
 
       // Build module banner
@@ -237,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="module-meta-group">
             ${customFeaturesCount > 0 ? `<span class="module-stat-pill" style="color: #a78bfa; border-color: rgba(167, 139, 250, 0.4);"><span class="material-symbols-outlined" style="font-size: 14px;">auto_awesome</span> ${customFeaturesCount} Sub-Fitur Kustom</span>` : ''}
             <span class="module-stat-pill">${filteredTC.length} Test Cases</span>
-            <span class="module-stat-pill" style="color: #34d399;">${passCount}/${mod.testcases.length} Pass</span>
+            <span class="module-stat-pill" style="color: #34d399;">${passCount}/${mod.testcases.length} Selesai</span>
             <span class="material-symbols-outlined chevron-icon">expand_more</span>
           </div>
         </div>
@@ -252,21 +265,15 @@ document.addEventListener('DOMContentLoaded', () => {
                   <th style="width: 260px;">Skenario Pengujian</th>
                   <th>Langkah Pengujian & Expected Result</th>
                   <th style="width: 140px;">Status</th>
-                  <th style="width: 240px;">Validasi Database</th>
+                  <th style="width: 240px;">Hasil Pengujian</th>
                   <th style="width: 110px;">Aksi Odoo</th>
                 </tr>
               </thead>
               <tbody>
                 ${filteredTC.map(tc => {
-                  let statusClass = 'pass';
-                  let statusLabel = 'PASS';
-                  if (tc.status === 'READY_PENDING_DATA') {
-                    statusClass = 'ready';
-                    statusLabel = 'READY / PENDING';
-                  } else if (tc.status === 'OUTSTANDING') {
-                    statusClass = 'outstanding';
-                    statusLabel = 'OUTSTANDING';
-                  }
+                  const meta = STATUS_META[tc.status] || { cls: 'na', label: tc.status };
+                  const statusClass = meta.cls;
+                  const statusLabel = meta.label;
 
                   const hasConveniences = tc.conveniences && tc.conveniences.length > 0;
                   const convMatch = hasConveniences && searchTerm && tc.conveniences.some(c =>
@@ -465,9 +472,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (m.testcases) {
           m.testcases.forEach(t => {
             total++;
-            if (t.status === 'PASS') pass++;
-            else if (t.status === 'READY_PENDING_DATA') ready++;
-            else out++;
+            if (DONE_STATUSES.includes(t.status)) pass++;
+            else if (t.status === 'NOT_TESTED') ready++;
+            else if (['BLOCKED', 'FAIL', 'NOT_DELIVERED'].includes(t.status)) out++;
           });
         }
       });
@@ -482,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (totalEl) totalEl.textContent = total;
     if (passEl) passEl.textContent = pass;
-    if (passSubEl && total > 0) passSubEl.textContent = `${((pass / total) * 100).toFixed(1)}% Lolos UAT & Berfungsi`;
+    if (passSubEl && total > 0) passSubEl.textContent = `${((pass / total) * 100).toFixed(1)}% Test Case Selesai`;
     if (readyEl) readyEl.textContent = ready;
     if (outEl) outEl.textContent = out;
     if (initEl && data.additional_modules) initEl.textContent = data.additional_modules.length;
